@@ -5,16 +5,18 @@ import logging
 import os
 from dotenv import load_dotenv
 
-# ===== LOAD ENVIRONMENT VARIABLES =====
+# ===== LOAD ENVIRONMENT VARIABLES (Optional) =====
 load_dotenv()
 
-# ===== CONFIGURATION =====
-TOKEN = os.getenv("DISCORD_TOKEN")
-if not TOKEN:
-    raise ValueError("❌ DISCORD_TOKEN not found in environment variables!")
-
+# ===== YOUR ORIGINAL CONFIGURATION =====
+TOKEN = "MTQ3MTc1MjY1OTU1MDczNjUwMg.GaW7V5.gMPBoVa8SdoDNxKmid2ycyHzD-fp3EfDKsV8Ro"
 CATEGORY_ID = 1458449979491225713
 ALLOWED_ROLES = ["Moderator", "Tournament Managers", "VC Controller", "1460248615330250752"]
+
+# ===== OR USE ENVIRONMENT VARIABLES (Uncomment below) =====
+# TOKEN = os.getenv("DISCORD_TOKEN", "MTQ3MTc1MjY1OTU1MDczNjUwMg.GaW7V5.gMPBoVa8SdoDNxKmid2ycyHzD-fp3EfDKsV8Ro")
+# CATEGORY_ID = int(os.getenv("CATEGORY_ID", 1458449979491225713))
+# ALLOWED_ROLES = os.getenv("ALLOWED_ROLES", "Moderator,Tournament Managers,VC Controller,1460248615330250752").split(",")
 
 # ===== LOGGING =====
 logging.basicConfig(level=logging.INFO)
@@ -67,6 +69,9 @@ async def is_admin(interaction: discord.Interaction):
 @bot.event
 async def on_ready():
     print(f"✅ Logged in as {bot.user}")
+    print(f"✅ Category ID: {CATEGORY_ID}")
+    print(f"✅ Allowed Roles: {ALLOWED_ROLES}")
+    
     await bot.change_presence(
         activity=discord.Activity(
             type=discord.ActivityType.watching,
